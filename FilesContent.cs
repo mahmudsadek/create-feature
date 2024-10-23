@@ -34,6 +34,26 @@ namespace create_feature
             return request.ToString();
         }
 
+        public static string Orchestrator(string ModelName, string FeatureName, bool isQuery)
+        {
+            StringBuilder request = new StringBuilder();
+            request.AppendLine($"using namespace Roboost.Feature.{MakePlural(ModelName)}.Commands;");
+            request.AppendLine($"public record {FeatureName}Orchestrator():IRequest<RequestResult<{FeatureName}ResponseViewModel>>;");
+            request.AppendLine($"public class {FeatureName}OrchestratorHandler : RequestHandlerBase<{FeatureName}Request, RequestResult<{FeatureName}ResponseViewModel>>");
+            request.AppendLine("{");
+            request.AppendLine($"   public {FeatureName}OrchestratorHandler(RequestHandlerBaseParameters parameters) : base(parameters) ");
+            request.AppendLine("    {}");
+            request.AppendLine($"    public override async Task<RequestResult<{FeatureName}ResponseViewModel>> Handle({FeatureName}Request request, CancellationToken cancellationToken) ");
+            request.AppendLine("    {");
+            request.AppendLine($"        var result = await _mediator.Send(new  {FeatureName}{(isQuery ? "Query" : "Command")});");
+            request.AppendLine($"        return result;");
+            request.AppendLine("    }");
+            request.AppendLine("}");
+
+
+            return request.ToString();
+        }
+
         static string MakePlural(string word)
         {
             if (string.IsNullOrEmpty(word))

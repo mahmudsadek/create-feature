@@ -22,12 +22,13 @@ namespace create_feature
             app.OnExecute(() =>
             {
                 string currentDirectory = Directory.GetCurrentDirectory();
-
+                DirectoryInfo dirInfo = new DirectoryInfo(Directory.GetCurrentDirectory());
+                string dirName = dirInfo.Name;
                 if (CommandNameOption.HasValue())
                 {
                     CreateDir(CommandNameOption.Value(), currentDirectory);
                     CreateDir("Commands", $"{currentDirectory}/{CommandNameOption.Value()}/");
-                    CreateFile(CommandNameOption.Value() + "Request", $"{currentDirectory}/{CommandNameOption.Value()}/Commands/");
+                    CreateFile(CommandNameOption.Value() + "Request", $"{currentDirectory}/{CommandNameOption.Value()}/Commands/", FilesContent.Request(dirName, CommandNameOption.Value()));
                     CreateFile(CommandNameOption.Value() + "Orchestrator", $"{currentDirectory}/{CommandNameOption.Value()}/Commands/");
                     CreateFile(CommandNameOption.Value() + "Command", $"{currentDirectory}/{CommandNameOption.Value()}/Commands");
                     CreateFile(CommandNameOption.Value() + "RequestViewModel", $"{currentDirectory}/{CommandNameOption.Value()}/");
@@ -40,7 +41,7 @@ namespace create_feature
                 {
                     CreateDir(QueryNameOption.Value(), currentDirectory);
                     CreateDir("Commands", $"{currentDirectory}/{QueryNameOption.Value()}/");
-                    CreateFile(CommandNameOption.Value() + "Request", $"{currentDirectory}/{CommandNameOption.Value()}/Commands/");
+                    CreateFile(CommandNameOption.Value() + "Request", $"{currentDirectory}/{CommandNameOption.Value()}/Commands/", FilesContent.Request(dirName, QueryNameOption.Value()));
                     CreateFile(CommandNameOption.Value() + "Orchestrator", $"{currentDirectory}/{CommandNameOption.Value()}/Commands/");
                     CreateDir("Queries", $"{currentDirectory}/{QueryNameOption.Value()}/");
                     CreateFile(CommandNameOption.Value() + "Query", $"{currentDirectory}/{CommandNameOption.Value()}/Queries/");
