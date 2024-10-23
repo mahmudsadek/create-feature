@@ -29,11 +29,11 @@ namespace create_feature
                     CreateDir(CommandNameOption.Value(), currentDirectory);
                     CreateDir("Commands", $"{currentDirectory}/{CommandNameOption.Value()}/");
                     CreateFile(CommandNameOption.Value() + "Request", $"{currentDirectory}/{CommandNameOption.Value()}/Commands/", FilesContent.Request(dirName, CommandNameOption.Value()));
-                    CreateFile(CommandNameOption.Value() + "Orchestrator", $"{currentDirectory}/{CommandNameOption.Value()}/Commands/");
-                    CreateFile(CommandNameOption.Value() + "Command", $"{currentDirectory}/{CommandNameOption.Value()}/Commands");
-                    CreateFile(CommandNameOption.Value() + "RequestViewModel", $"{currentDirectory}/{CommandNameOption.Value()}/");
-                    CreateFile(CommandNameOption.Value() + "ResponseViewModel", $"{currentDirectory}/{CommandNameOption.Value()}/");
-                    CreateFile(CommandNameOption.Value() + "Endpoint", $"{currentDirectory}/{CommandNameOption.Value()}/");
+                    CreateFile(CommandNameOption.Value() + "Orchestrator", $"{currentDirectory}/{CommandNameOption.Value()}/Commands/", FilesContent.Orchestrator(dirName, CommandNameOption.Value(), false));
+                    CreateFile(CommandNameOption.Value() + "Command", $"{currentDirectory}/{CommandNameOption.Value()}/Commands", FilesContent.Command(dirName, CommandNameOption.Value()));
+                    CreateFile(CommandNameOption.Value() + "RequestViewModel", $"{currentDirectory}/{CommandNameOption.Value()}/", FilesContent.RequestVM(dirName, CommandNameOption.Value()));
+                    CreateFile(CommandNameOption.Value() + "ResponseViewModel", $"{currentDirectory}/{CommandNameOption.Value()}/", FilesContent.ResponseVM(dirName, CommandNameOption.Value()));
+                    CreateFile(CommandNameOption.Value() + "Endpoint", $"{currentDirectory}/{CommandNameOption.Value()}/", FilesContent.EndPoint(dirName, CommandNameOption.Value()));
 
                 }
 
@@ -41,13 +41,13 @@ namespace create_feature
                 {
                     CreateDir(QueryNameOption.Value(), currentDirectory);
                     CreateDir("Commands", $"{currentDirectory}/{QueryNameOption.Value()}/");
-                    CreateFile(CommandNameOption.Value() + "Request", $"{currentDirectory}/{CommandNameOption.Value()}/Commands/", FilesContent.Request(dirName, QueryNameOption.Value()));
-                    CreateFile(CommandNameOption.Value() + "Orchestrator", $"{currentDirectory}/{CommandNameOption.Value()}/Commands/");
                     CreateDir("Queries", $"{currentDirectory}/{QueryNameOption.Value()}/");
-                    CreateFile(CommandNameOption.Value() + "Query", $"{currentDirectory}/{CommandNameOption.Value()}/Queries/");
-                    CreateFile(QueryNameOption.Value() + "ResponseViewModel", $"{currentDirectory}/{CommandNameOption.Value()}/");
-                    CreateFile(QueryNameOption.Value() + "RequestViewModel", $"{currentDirectory}/{CommandNameOption.Value()}/");
-                    CreateFile(QueryNameOption.Value() + "Endpoint", $"{currentDirectory}/{CommandNameOption.Value()}/");
+                    CreateFile(CommandNameOption.Value() + "Request", $"{currentDirectory}/{CommandNameOption.Value()}/Commands/", FilesContent.Request(dirName, QueryNameOption.Value()));
+                    CreateFile(CommandNameOption.Value() + "Orchestrator", $"{currentDirectory}/{CommandNameOption.Value()}/Commands/", FilesContent.Orchestrator(dirName, QueryNameOption.Value(), true));
+                    CreateFile(CommandNameOption.Value() + "Query", $"{currentDirectory}/{CommandNameOption.Value()}/Queries/", FilesContent.Query(dirName, QueryNameOption.Value()));
+                    CreateFile(QueryNameOption.Value() + "ResponseViewModel", $"{currentDirectory}/{CommandNameOption.Value()}/", FilesContent.ResponseVM(dirName, QueryNameOption.Value()));
+                    CreateFile(QueryNameOption.Value() + "RequestViewModel", $"{currentDirectory}/{CommandNameOption.Value()}/", FilesContent.RequestVM(dirName, QueryNameOption.Value()));
+                    CreateFile(QueryNameOption.Value() + "Endpoint", $"{currentDirectory}/{CommandNameOption.Value()}/", FilesContent.EndPoint(dirName, QueryNameOption.Value()));
 
                 }
             });
