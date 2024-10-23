@@ -8,10 +8,29 @@ namespace create_feature
 {
     internal class FilesContent
     {
-        public static string Request(string FeatureName)
+        public static string Request(string ModelName, string FeatureName)
         {
             StringBuilder request = new StringBuilder();
-            request.Append($"using namespace {MakePlural(FeatureName)}");
+            request.AppendLine($"using namespace Roboost.Feature.{MakePlural(ModelName)}.Commands;");
+            request.AppendLine($"public record {FeatureName}Request({FeatureName}RequestViewModel viewModel):IRequest<RequestResult<{FeatureName}ResponseViewModel>>;");
+            request.AppendLine($"public class {FeatureName}RequestHandler : RequestHandlerBase<{FeatureName}Request, RequestResult<{FeatureName}ResponseViewModel>>");
+            request.AppendLine("{");
+            request.AppendLine($"   public {FeatureName}RequestHandler(RequestHandlerBaseParameters parameters) : base(parameters) ");
+            request.AppendLine("    {}");
+            request.AppendLine($"    public override async Task<RequestResult<{FeatureName}ResponseViewModel>> Handle({FeatureName}Request request, CancellationToken cancellationToken) ");
+            request.AppendLine("    {");
+            request.AppendLine($"        var validationResult = ValidateRequest();");
+            request.AppendLine("        if (!validationResult.IsSuccess) { return validationResult; }");
+            request.AppendLine($"        var result = await _mediator.Send(new  {FeatureName}Orchestrator());");
+            request.AppendLine($"        return result;");
+            request.AppendLine("    }");
+            request.AppendLine($"        private RequestResult<{FeatureName}ResponseViewModel> ValidateRequest()");
+            request.AppendLine("    {");
+            request.AppendLine($"            return RequestResult<{FeatureName}ResponseViewModel>.Success(default, \"\");");
+            request.AppendLine("    }");
+            request.AppendLine("}");
+
+
             return request.ToString();
         }
 
