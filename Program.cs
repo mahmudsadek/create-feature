@@ -18,6 +18,8 @@ namespace create_feature
 
             var CommandNameOption = app.Option("-c|--command <FOLDERNAME>", "command name to create.", CommandOptionType.SingleValue);
             var QueryNameOption = app.Option("-q|--query <FOLDERNAME>", "query name to create.", CommandOptionType.SingleValue);
+            var CreateCommandNameOption = app.Option("-C|--Command <FOLDERNAME>", "query name to create.", CommandOptionType.SingleValue);
+            var CreateQueryNameOption = app.Option("-Q|--Query <FOLDERNAME>", "query name to create.", CommandOptionType.SingleValue);
 
             app.OnExecute(() =>
             {
@@ -56,6 +58,37 @@ namespace create_feature
                         CreateFile(QueryNameOption.Value() + "ResponseViewModel.cs", $"{currentDirectory}/{QueryNameOption.Value()}/", FilesContent.ResponseVM(dirName, QueryNameOption.Value()));
                         CreateFile(QueryNameOption.Value() + "RequestViewModel.cs", $"{currentDirectory}/{QueryNameOption.Value()}/", FilesContent.RequestVM(dirName, QueryNameOption.Value()));
                         CreateFile(QueryNameOption.Value() + "Endpoint.cs", $"{currentDirectory}/{QueryNameOption.Value()}/", FilesContent.EndPoint(dirName, QueryNameOption.Value()));
+                    }
+                    catch (System.Exception ex)
+                    {
+                        System.Console.WriteLine(ex.Message);
+                    }
+                }
+
+                if (CreateQueryNameOption.HasValue())
+                {
+                    try
+                    {
+                        if(!Directory.Exists($"{currentDirectory}/Queries"))
+                            CreateDir("Queries", currentDirectory);
+                        
+                        CreateFile(CreateQueryNameOption.Value() + "Query.cs", $"{currentDirectory}/Queries/", FilesContent.Query(dirName, CreateQueryNameOption.Value()));
+                    }
+                    catch (System.Exception ex)
+                    {
+                        System.Console.WriteLine(ex.Message);
+                    }
+                }
+                
+                if (CreateCommandNameOption.HasValue())
+                {
+                    try
+                    {
+                        if(!Directory.Exists($"{currentDirectory}/Commands"))
+                            CreateDir("Commands", currentDirectory);
+                        
+                        CreateFile(CreateCommandNameOption.Value() + "Command.cs", $"{currentDirectory}/Command/", FilesContent.Command(dirName, CreateCommandNameOption.Value()));
+
                     }
                     catch (System.Exception ex)
                     {
